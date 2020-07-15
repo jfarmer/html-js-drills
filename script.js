@@ -22,7 +22,8 @@ function addName() {
   // - https://www.w3schools.com/jsref/prop_node_innertext.asp
 
   let nameElement = document.querySelector('#name');
-  nameElement.innerText = 'See script.js!';
+  nameElement.innerText = 'Jesse Farmer';
+  nameElement.style.color = 'red';
 }
 
 function addFavoriteThings() {
@@ -36,6 +37,21 @@ function addFavoriteThings() {
   //   - https://htmldog.com/guides/javascript/advanced/creatingelements/
   //   - https://www.javascripttutorial.net/javascript-dom/javascript-createelement/
   //   - https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement
+
+  let dogsListItem = document.createElement('li');
+  dogsListItem.innerText = 'Dogs';
+
+  let ninListItem = document.createElement('li');
+  ninListItem.innerText = 'Nine Inch Nails';
+
+  let pizzaListItem = document.createElement('li');
+  pizzaListItem.innerText = 'Chicago-style Pizza';
+
+  let favThingsList = document.querySelector('#favthings');
+
+  favThingsList.appendChild(dogsListItem);
+  favThingsList.appendChild(ninListItem);
+  favThingsList.appendChild(pizzaListItem);
 }
 
 function replaceImage() {
@@ -46,14 +62,22 @@ function replaceImage() {
   // See:
   // - https://www.tutorialrepublic.com/javascript-tutorial/javascript-dom-get-set-attributes.php
   // - https://www.w3schools.com/jsref/met_element_setattribute.asp
+
+  let doggoBeGone = document.querySelector('#picture');
+  doggoBeGone.src = 'https://pbs.twimg.com/media/Ec2Y0gVU8AMim1a?format=png&name=medium';
 }
 
 function changeCodeStatus() {
   console.log('Called changeCodeStatus()');
+  let codeStatusElement = document.querySelector('#codestatus');
 
-  // 1. Get a reference to <div id="codestatus">
-  // 2. Create image element containing a sweet ol' meme
-  // 3. Replace text in codestatus w/ image
+  codeStatusElement.innerText = '';
+
+  let memeTime = document.createElement('img');
+  memeTime.src = 'https://i.pinimg.com/originals/33/fb/06/33fb067593a2a949e349a4e899c508d3.webp';
+  memeTime.height = '300';
+  memeTime.style.border = '1px solid black;'
+  codeStatusElement.appendChild(memeTime);
 }
 
 // Get a reference to the button w/ id="show-info-button"
@@ -86,16 +110,53 @@ let informationForm = document.querySelector('#information-form');
 
 // Do something when form is submitted
 informationForm.addEventListener('submit', function(event) {
+  let inputElement;
+  let outputElement;
+
   event.preventDefault(); // You will want this here. Remove it and see what changes.
 
-  console.log('Form submitted');
+  inputElement = document.querySelector('#fname');
+  outputElement = document.querySelector('#firstname');
+  outputElement.style.color = 'red';
+  outputElement.innerText = inputElement.value;
 
-  // Your job:
-  //   1. Get information typed into the form
-  //   2. Display that info in "Display that info here" section
+  inputElement = document.querySelector('#lname');
+  outputElement = document.querySelector('#lastname');
+  outputElement.style.color = 'red';
+  outputElement.innerText = inputElement.value;
 
-  // Google things like:
-  //   javascript form element get values
+  inputElement = document.querySelector('#cars');
+  outputElement = document.querySelector('#chosencar');
+  outputElement.style.color = 'red';
+  outputElement.innerText = inputElement.value;
+
+  inputElement = document.querySelector('input[name=icecream]:checked');
+  outputElement = document.querySelector('#icecreamstatus');
+  outputElement.style.color = 'red';
+  outputElement.innerText = inputElement.value;
+
+  let humanCheck = document.querySelector('#humancheck');
+  let coderCheck = document.querySelector('#codercheck');
+  let checkMessage = '';
+  let separator = '';
+
+  // If both are checked, separate with ', '
+  // If only 1 is checked, separate with ''
+  if (humanCheck.checked && coderCheck.checked) {
+    separator = ', ';
+  }
+
+  if (humanCheck.checked) {
+    checkMessage = 'Human';
+  }
+
+  if (coderCheck.checked) {
+    checkMessage = checkMessage + separator + 'Coder';
+  }
+
+  let checkSection = document.querySelector('#checks');
+  checkSection.style.color = 'green';
+  checkSection.innerText = checkMessage;
 });
 
 /*************************************
@@ -111,14 +172,14 @@ informationForm.addEventListener('submit', function(event) {
 // then log something to the console
 
 // Fill in ________ to get a reference to the correct button on the page
-let consoleLogButton = document.querySelector('#________');
+let consoleLogButton = document.querySelector('#console-log-button');
 
 // Log something when that button is clicked
 consoleLogButton.addEventListener('click', function() {
   console.log('Change this text if you want!');
 });
 
-let makeBlueButton = document.querySelector('#________');
+let makeBlueButton = document.querySelector('#make-blue-button');
 makeBlueButton.addEventListener('click', function() {
   // Your job:
   //  1. When a user clicks "Change the text to the right blue"
@@ -127,7 +188,7 @@ makeBlueButton.addEventListener('click', function() {
 
 // Adding an event listener to document means the "keydown" event
 // can happen anywhere on the page and we'll respond.
-document.addeventListener('keydown', function() {
+document.addEventListener('keydown', function() {
   // This is called whenever a user pressed any key.
 
   // Your job:
@@ -173,7 +234,18 @@ document.addeventListener('keydown', function() {
  *
  */
 
-// Your code goes here
+// Current time in miliseconds since Jan. 1, 1970 12AM GMT
+let startTime = Date.now();
+
+setInterval(function() {
+  let currentTime = Date.now();
+  let diffInSeconds = (currentTime - startTime) / 1000;
+
+  let secondsOutput = document.querySelector('#seconds');
+
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed
+  secondsOutput.innerText = diffInSeconds.toFixed(1);
+}, 20);
 
 /****************************************
  * Section 6 - Your own section!        *
